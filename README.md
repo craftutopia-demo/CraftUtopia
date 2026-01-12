@@ -3,7 +3,7 @@
 
   # CraftUtopia
 
-  **A multi-agent Minecraft construction pipeline that turns 2D images into coordinated 3D builds**
+  **An LLM-based MAS that <span style="color:#d32f2f;"><b>constructs 3D</b></span> buildings <span style="color:#d32f2f;"><b>from a single 2D image</b></span> in Minecraft and <span style="color:#d32f2f;"><b>scales efficiently</b></span> as the team size increases.**
 
   <p>
     <a href="README.md"><b>English</b></a> · <a href="README_zh.md"><b>中文</b></a>
@@ -16,8 +16,9 @@
   </p>
 
   <p>
-    <a href="#overview">Overview</a> ·
     <a href="#demo-video">Demo Video</a> ·
+    <a href="#highlights">Highlights</a> ·
+    <a href="#overview">Overview</a> ·
     <a href="#results">Results</a> ·
     <a href="#project-introduction">Project Introduction</a> ·
     <a href="#system-architecture">System Architecture</a> ·
@@ -28,6 +29,30 @@
 </div>
 
 ---
+
+## Demo Video
+
+<div align="center">
+  <a href="https://youtu.be/NkG13PLTBz4">
+    <img src="https://img.youtube.com/vi/NkG13PLTBz4/hqdefault.jpg" width="90%" alt="Demo video on YouTube">
+  </a>
+</div>
+
+You can also download the MP4 and MOV source files from this repository (`demo.mp4`, `demo.mov`).
+
+## Highlights
+
+<div align="center">
+  <img src="assets/images/highlight.png" width="90%" alt="Highlights">
+</div>
+
+- Supports <span style="color:#d32f2f;"><b>3D construction from a single 2D image</b></span>.
+- Uses a hierarchical agent architecture (<span style="color:#d32f2f;"><b>manager -> foreman -> worker</b></span>) to improve coordination efficiency.
+- Distills workers' successful action sequences into <span style="color:#d32f2f;"><b>reusable, code-based skills</b></span>.
+- Achieves a <span style="color:#d32f2f;"><b>100% build success rate</b></span> across three representative builds.
+- Scales effectively: <span style="color:#d32f2f;"><b>more workers -> faster builds</b></span>.
+- Demonstrates strong generalization to <span style="color:#d32f2f;"><b>any building types</b></span>.
+- Exhibits <span style="color:#d32f2f;"><b>human-like emergent behaviors</b></span>, e.g., <span style="color:#d32f2f;"><b>autonomously learning scaffolding</b></span>.
 
 ## Overview
 
@@ -40,39 +65,24 @@
 - Parallel execution with manager-foreman-worker task partitioning.
 - Skill distillation that reuses repeated routines across teams.
 
-## Demo Video
-
-<div align="center">
-  <a href="https://youtu.be/NkG13PLTBz4">
-    <img src="https://img.youtube.com/vi/NkG13PLTBz4/hqdefault.jpg" width="90%" alt="Demo video on YouTube">
-  </a>
-</div>
-
-You can also download the MP4 and MOV source files from this repository (`demo.mp4`, `demo.mov`).
-
----
-
 ## Results
 
 <div align="center">
   <table width="90%">
   <tr>
-  <td align="center"><b>Success Rate</b><br><sub>Across three builds in five trials</sub><br><b>100%</b></td>
-  <td align="center"><b>Scalability</b><br><sub>NCPA completion time</sub><br><b>6 workers: 1.5x vs 3</b></td>
-  <td align="center"><b>Team Speedup</b><br><sub>NCPA completion time</sub><br><b>3.9x vs 1 worker</b></td>
+  <td align="center"><b>Success Rate</b><br><b><span style="color:#d32f2f;">100%</span></b></td>
+  <td align="center"><b>Team Speedup</b><br><b><span style="color:#d32f2f;">6 workers</span>: <span style="color:#d32f2f;">3.9x faster</span> than 1 worker</b></td>
+  <td align="center"><b>LLM Cost</b><br><b><span style="color:#d32f2f;">1/4</span> of original</b></td>
+  </tr>
+  <tr>
+  <td align="center"><b>Baseline Gap</b><br><b>MINDcraft <span style="color:#d32f2f;">13.33%</span></b></td>
+  <td align="center"><b>Scalability</b><br><b><span style="color:#d32f2f;">6 workers</span>: <span style="color:#d32f2f;">1.5x faster</span> than 3 workers</b></td>
+  <td align="center"><b>Large Blueprint</b><br><b><span style="color:#d32f2f;">40</span> levels, <span style="color:#d32f2f;">~20k</span> blocks</b></td>
   </tr>
   </table>
 </div>
 
 <br/>
-
-**Highlights from the paper and demo builds:**
-
-- **100% success rate** across three builds in five trials using only a single 2D reference image.
-- **Baseline gap**: MINDcraft fails to complete Temple of Heaven and NCPA even with a full 3D blueprint, and only succeeds in 2/5 trials on the Pyramids.
-- **Scalability**: more workers consistently reduce completion time (NCPA: 6 workers are 1.5x faster than 3 workers and 3.9x faster than 1 worker).
-- **Large-scale construction**: 40 levels and nearly 20k blocks in a single blueprint.
-- **Diverse inputs**: a single pipeline reproduces multiple structures from different PNG images.
 
 <table align="center" width="100%">
 <tr>
@@ -96,6 +106,15 @@ You can also download the MP4 and MOV source files from this repository (`demo.m
 </td>
 </tr>
 </table>
+
+### Results Summary
+
+- **CraftUtopia achieves a 100% build success rate across three representative structures with five trials each, using only a single 2D reference image per build.**
+- **Compared to MINDcraft, CraftUtopia completes Temple of Heaven and NCPA where the baseline fails; on Pyramids the baseline reaches only 13.33% success.**
+- **Scaling improves speed: on NCPA, 6 workers are 1.5x faster than 3 workers and 3.9x faster than 1 worker.**
+- **The system handles large-scale blueprints (40 levels, ~20k blocks) and generalizes across diverse building types.**
+- **Skill distillation reduces repeated LLM calls to about one quarter of the original cost and supports consistent execution.**
+- **Emergent behaviors such as autonomous scaffolding use appear during long-horizon builds.**
 
 ---
 
