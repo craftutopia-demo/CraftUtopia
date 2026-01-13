@@ -68,35 +68,19 @@
 ## 结果
 
 
-<br/>
-
+- **一致成功：** CraftUtopia 仅用单张 2D 图像在三个构建任务上实现 100% 成功率。
 <div align="center">
-<table align="center" width="100%" style="margin: 0 auto; width: 100%;">
-<tr>
-<td align="center" width="100%">
-<img src="assets/images/tiantan.png" height="300" alt="超大规模建造">
-<br/><sub><b>大规模：</b>系统可处理大规模蓝图，包括 40 层、约 2 万方块的设计。</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="100%">
-<img src="assets/images/img2build.png" height="300" alt="多种图像到建筑">
-<br/><sub><b>多样化输入：</b>从不同 PNG 输入重建多样化建筑。CraftUtopia 所有建筑建造成功率 100%。</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="100%">
-<img src="assets/images/metrics_comparison.png" height="300" alt="可扩展性">
-<br/><sub><b>扩展性：</b>工人数量增加，完成时间下降；6 人比 3 人快 1.5x，比 1 人快 3.9x。</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="100%">
-<img src="assets/images/compare.png" height="300" alt="基线对比">
-<br/><sub><b>基线对比：</b>与 MINDcraft 相比，CraftUtopia 可完成其失败的建造任务。</sub>
-</td>
-</tr>
-</table>
+  <img src="assets/images/img2build.png" width="90%" style="height: auto;" alt="多种图像到建筑">
+</div>
+
+- **高效扩展：** 随着工人数量增加，建造时间显著下降。
+<div align="center">
+  <img src="assets/images/metrics_comparison.png" width="90%" style="height: auto;" alt="可扩展性">
+</div>
+
+- **可靠执行：** MINDcraft 即便使用 3D 输入、任意智能体配置也无法完成建造；CraftUtopia 仅凭单张 2D 图像即可稳定完成。
+<div align="center">
+  <img src="assets/images/compare.png" width="90%" style="height: auto;" alt="基线对比">
 </div>
 
 -----
@@ -119,25 +103,4 @@
   <img src="assets/images/architecture.jpg" alt="CraftUtopia 架构图">
 </p>
 
-CraftUtopia 采用两阶段流程：**设计**将单张 2D 参考图像转换为 Minecraft 兼容的 3D 蓝图；**建造**将蓝图拆分为空间互不重叠的子任务并并行执行。
-
-<table align="center" width="100%">
-<tr>
-<td width="50%" valign="top" align="center">
-
-### 设计阶段
-- 从 2D 图像重建 3D 模型（TRELLIS.2）。
-- 转换为基于方块的蓝图（ObjToSchematic）。
-- 由 LLM 生成包含方块类型与位置的结构文件。
-
-</td>
-<td width="50%" valign="top" align="center">
-
-### 建造阶段
-- **Manager -> Foreman -> Worker** 分层结构将任务划分为互不重叠区域。
-- 工头为团队制定计划，工人执行方块放置。
-- **技能获取**将重复操作提炼为共享技能，减少重复规划并加速建造。
-
-</td>
-</tr>
-</table>
+CraftUtopia 是面向 Minecraft 建造的分层多智能体系统。**管理者 -> 工头 -> 工人** 的协作层级将任务拆分为互不重叠的区域，协调执行并完成方块放置。技能蒸馏沉淀成功经验，减少重复规划并提升扩展性。

@@ -54,62 +54,25 @@ You can also download the MP4 and MOV source files from this repository (`demo.m
 - Demonstrates strong generalization to <span style="color:#d32f2f;"><b>any building types</b></span>.
 - Exhibits <span style="color:#d32f2f;"><b>human-like emergent behaviors</b></span>, e.g., <span style="color:#d32f2f;"><b>autonomously learning scaffolding</b></span>.
 
-## Overview
-
-> CraftUtopia orchestrates a full-stack build pipeline: an image-to-blueprint design stage and a hierarchical, multi-agent execution stage inside Minecraft. The system coordinates parallel, non-overlapping builds with shared skills and structured task decomposition.
-
-### Key Capabilities
-
-- Image-to-blueprint conversion for block-accurate builds.
-- Hierarchical coordination that scales teams without collisions.
-- Parallel execution with manager-foreman-worker task partitioning.
-- Skill distillation that reuses repeated routines across teams.
+---
 
 ## Results
 
 
-<br/>
-
+- **Consistent success:** CraftUtopia achieves 100% success across all three builds using only a single 2D image
 <div align="center">
-<table align="center" width="100%" style="margin: 0 auto; width: 100%;">
-<tr>
-<td align="center" width="100%">
-<img src="assets/images/tiantan.png" height="300" alt="Large blueprint build">
-<br/><sub><b>Large-scale:</b> the system handles large-scale blueprints, including a 40-layer design with ~20k blocks.</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="100%">
-<img src="assets/images/img2build.png" height="300" alt="Multiple builds from 2D images">
-<br/><sub><b>Diverse inputs:</b> reconstructing multiple buildings from PNG images. CraftUtopia achieves a 100% build success rate across all buildings.</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="100%">
-<img src="assets/images/metrics_comparison.png" height="300" alt="Scalability with more workers">
-<br/><sub><b>Scaling:</b> completion time decreases as worker count increases; 6 workers are 1.5x faster than 3 workers and 3.9x faster than 1 worker.</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="100%">
-<img src="assets/images/compare.png" height="300" alt="Baseline comparison">
-<br/><sub><b>Baseline gap:</b> compared to MINDcraft, CraftUtopia completes builds where the baseline fails.</sub>
-</td>
-</tr>
-</table>
+  <img src="assets/images/img2build.png" width="90%" style="height: auto;" alt="Multiple builds from 2D images">
 </div>
 
------
+- **Efficient scaling:** Build time decreases substantially as more workers are added.
+<div align="center">
+  <img src="assets/images/metrics_comparison.png" width="90%" style="height: auto;" alt="Scalability with more workers">
+</div>
 
-## Project Introduction
-
-> CraftUtopia targets collaborative construction in an open-world game environment. It operates under long-horizon tasks, partial observability, and non-stationary dynamics, and builds directly from a **single 2D reference image** without relying on predefined templates. The system follows a Design-then-Build pipeline and scales through hierarchical coordination and skill acquisition.
-
-### Challenges We Address
-
-- **Open-world setting**: long-horizon tasks, partial observability, and non-stationary dynamics.
-- **Template dependence**: builds directly from a single 2D reference image rather than predefined templates or blueprints.
-- **Scaling limits**: prior work shows larger teams can increase coordination friction instead of speed; CraftUtopia is designed to scale.
+- **Reliable execution:** MINDcraft fails to complete the build under any agent configuration, even with 3D input, whereas CraftUtopia builds reliably from a single 2D image.
+<div align="center">
+  <img src="assets/images/compare.png" width="90%" style="height: auto;" alt="Baseline comparison">
+</div>
 
 ---
 
@@ -119,25 +82,4 @@ You can also download the MP4 and MOV source files from this repository (`demo.m
   <img src="assets/images/architecture.jpg" alt="CraftUtopia architecture diagram">
 </p>
 
-CraftUtopia follows a two-stage pipeline drawn from the paper: **Design** converts a single 2D reference image into a Minecraft-compatible 3D blueprint, and **Build** decomposes that blueprint into spatially disjoint subtasks for parallel execution.
-
-<table align="center" width="100%">
-<tr>
-<td width="50%" valign="top" align="center">
-
-### Design Stage
-- Reconstruct a 3D model from the input image (TRELLIS.2).
-- Convert the model into a block-based blueprint (ObjToSchematic).
-- Use LLMs to compile the blueprint into a structure file with explicit block types and placements.
-
-</td>
-<td width="50%" valign="top" align="center">
-
-### Build Stage
-- **Manager -> Foreman -> Worker** hierarchy splits work across non-overlapping regions.
-- Foremen plan for their teams and workers execute in Minecraft.
-- **Skill acquisition** distills repeated routines into a shared library, reducing LLM replanning and accelerating future builds.
-
-</td>
-</tr>
-</table>
+CraftUtopia is a hierarchical multi-agent system for in-game construction. The **Manager -> Foreman -> Worker** hierarchy splits work into non-overlapping regions, coordinates execution, and performs block placements in Minecraft. Skill distillation captures successful routines to reduce replanning and improve scalability.
