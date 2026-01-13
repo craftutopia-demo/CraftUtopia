@@ -10,7 +10,7 @@
   </p>
 
   <p align="center">
-    <img src="https://img.shields.io/badge/Pipeline-2D%20to%20Blueprint%20to%20Build-blue" alt="Pipeline badge">
+    <img src="https://img.shields.io/badge/Agent-2D%20to%20Blueprint%20to%20Build-blue" alt="Agent badge">
     <img src="https://img.shields.io/badge/Coordination-Manager%2FForeman%2FWorker-orange" alt="Coordination badge">
     <img src="https://img.shields.io/badge/Skills-Distillation-purple" alt="Skills badge">
   </p>
