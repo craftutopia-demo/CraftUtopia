@@ -67,56 +67,39 @@ You can also download the MP4 and MOV source files from this repository (`demo.m
 
 ## Results
 
-<div align="center">
-  <table width="90%">
-  <tr>
-  <td align="center"><b>Success Rate</b><br><b><span style="color:#d32f2f;">100%</span></b></td>
-  <td align="center"><b>Team Speedup</b><br><b><span style="color:#d32f2f;">6 workers</span>: <span style="color:#d32f2f;">3.9x faster</span> than 1 worker</b></td>
-  <td align="center"><b>LLM Cost</b><br><b><span style="color:#d32f2f;">1/4</span> of original</b></td>
-  </tr>
-  <tr>
-  <td align="center"><b>Baseline Gap</b><br><b>MINDcraft <span style="color:#d32f2f;">13.33%</span></b></td>
-  <td align="center"><b>Scalability</b><br><b><span style="color:#d32f2f;">6 workers</span>: <span style="color:#d32f2f;">1.5x faster</span> than 3 workers</b></td>
-  <td align="center"><b>Large Blueprint</b><br><b><span style="color:#d32f2f;">40</span> levels, <span style="color:#d32f2f;">~20k</span> blocks</b></td>
-  </tr>
-  </table>
-</div>
 
 <br/>
 
-<table align="center" width="100%">
+<div align="center">
+<table align="center" width="100%" style="margin: 0 auto; width: 100%;">
 <tr>
-<td align="center" width="50%">
-<img src="assets/images/tiantan.png" width="95%" alt="Large blueprint build">
-<br/><sub><b>Large-scale:</b> 40-layer blueprint with ~20k blocks.</sub>
-</td>
-<td align="center" width="50%">
-<img src="assets/images/img2build.png" width="95%" alt="Multiple builds from 2D images">
-<br/><sub><b>Diverse inputs:</b> reconstructing multiple buildings from PNG images.</sub>
+<td align="center" width="100%">
+<img src="assets/images/tiantan.png" height="300" alt="Large blueprint build">
+<br/><sub><b>Large-scale:</b> the system handles large-scale blueprints, including a 40-layer design with ~20k blocks.</sub>
 </td>
 </tr>
 <tr>
-<td align="center" width="50%">
-<img src="assets/images/metrics_comparison.png" width="95%" alt="Scalability with more workers">
-<br/><sub><b>Scaling:</b> completion time decreases as worker count increases.</sub>
+<td align="center" width="100%">
+<img src="assets/images/img2build.png" height="300" alt="Multiple builds from 2D images">
+<br/><sub><b>Diverse inputs:</b> reconstructing multiple buildings from PNG images. CraftUtopia achieves a 100% build success rate across all buildings.</sub>
 </td>
-<td align="center" width="50%">
-<img src="assets/images/compare.png" width="95%" alt="Baseline comparison">
-<br/><sub><b>Baseline gap:</b> CraftUtopia completes builds where MINDcraft fails.</sub>
+</tr>
+<tr>
+<td align="center" width="100%">
+<img src="assets/images/metrics_comparison.png" height="300" alt="Scalability with more workers">
+<br/><sub><b>Scaling:</b> completion time decreases as worker count increases; 6 workers are 1.5x faster than 3 workers and 3.9x faster than 1 worker.</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="100%">
+<img src="assets/images/compare.png" height="300" alt="Baseline comparison">
+<br/><sub><b>Baseline gap:</b> compared to MINDcraft, CraftUtopia completes builds where the baseline fails.</sub>
 </td>
 </tr>
 </table>
+</div>
 
-### Results Summary
-
-- **CraftUtopia achieves a 100% build success rate across three representative structures with five trials each, using only a single 2D reference image per build.**
-- **Compared to MINDcraft, CraftUtopia completes Temple of Heaven and NCPA where the baseline fails; on Pyramids the baseline reaches only 13.33% success.**
-- **Scaling improves speed: on NCPA, 6 workers are 1.5x faster than 3 workers and 3.9x faster than 1 worker.**
-- **The system handles large-scale blueprints (40 levels, ~20k blocks) and generalizes across diverse building types.**
-- **Skill distillation reduces repeated LLM calls to about one quarter of the original cost and supports consistent execution.**
-- **Emergent behaviors such as autonomous scaffolding use appear during long-horizon builds.**
-
----
+-----
 
 ## Project Introduction
 
@@ -158,53 +141,3 @@ CraftUtopia follows a two-stage pipeline drawn from the paper: **Design** conver
 </td>
 </tr>
 </table>
-
----
-
-## Mechanisms
-
-CraftUtopia relies on two mechanisms:
-
-### 1) Hierarchical coordination (manager -> foreman -> worker)
-- The manager decomposes the blueprint into **spatially disjoint regions** and assigns each region as a team-level goal.  
-- Each foreman plans within its assigned region and schedules workers.  
-- Workers execute local block placement and report progress upward, reducing cross-team interference.
-
-### 2) Skill acquisition and reuse
-- Foremen detect recurring action routines during execution.  
-- These routines are reported to the manager, curated into a shared skill library, and distributed to all teams.  
-- Foremen invoke learned skills instead of repeated LLM replanning, improving speed and stability at scale.
-
----
-
-## Workflow
-
-1. **Design (2D to 3D blueprint)**
-2. **Build (blueprint to world)**
-
-<details>
-<summary><b>Design details</b></summary>
-
-- The architectural designer reconstructs a 3D model from a 2D image.  
-- The model is converted into a Minecraft-compatible block blueprint.  
-- A structural task file is exported for execution.
-
-</details>
-
-<details>
-<summary><b>Build details</b></summary>
-
-- The project manager decomposes the blueprint into disjoint subtasks.  
-- Foremen schedule and coordinate parallel teams.  
-- Workers place blocks and report progress back to the manager.
-
-</details>
-
----
-
-## Agent Roles
-
-- **Architectural designer**: Converts 2D inputs into a buildable blueprint.
-- **Project manager**: Splits the blueprint into conflict-free task units.
-- **Foremen**: Plan execution order and assign work to teams.
-- **Workers**: Execute block placement in the game world.

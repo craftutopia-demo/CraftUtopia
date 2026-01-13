@@ -5,7 +5,7 @@
 
   **一个基于 LLM 的 MAS，在 Minecraft 中从 <span style="color:#d32f2f;"><b>单张 2D 图像</b></span> <span style="color:#d32f2f;"><b>构建 3D</b></span> 建筑，并随团队规模提升而 <span style="color:#d32f2f;"><b>高效扩展</b></span>。**
 
-  <p>
+  <p align="center">
     <a href="README.md"><b>English</b></a> · <a href="README_zh.md"><b>中文</b></a>
   </p>
 
@@ -15,7 +15,7 @@
     <img src="https://img.shields.io/badge/Skills-Distillation-purple" alt="Skills badge">
   </p>
 
-  <p align="center">
+  <p>
     <a href="#演示视频">演示视频</a> ·
     <a href="#亮点">亮点</a> ·
     <a href="#概览">概览</a> ·
@@ -67,56 +67,39 @@
 
 ## 结果
 
-<div align="center">
-  <table width="90%">
-  <tr>
-  <td align="center"><b>成功率</b><br><b><span style="color:#d32f2f;">100%</span></b></td>
-  <td align="center"><b>团队加速</b><br><b><span style="color:#d32f2f;">6 人</span>：<span style="color:#d32f2f;">比 1 人快 3.9x</span></b></td>
-  <td align="center"><b>LLM 调用成本</b><br><b>降至原来的 <span style="color:#d32f2f;">1/4</span></b></td>
-  </tr>
-  <tr>
-  <td align="center"><b>基线差距</b><br><b>MINDcraft <span style="color:#d32f2f;">13.33%</span></b></td>
-  <td align="center"><b>可扩展性</b><br><b><span style="color:#d32f2f;">6 人</span>：<span style="color:#d32f2f;">比 3 人快 1.5x</span></b></td>
-  <td align="center"><b>大型蓝图</b><br><b><span style="color:#d32f2f;">40</span> 层，约 <span style="color:#d32f2f;">2 万</span> 方块</b></td>
-  </tr>
-  </table>
-</div>
 
 <br/>
 
-<table align="center" width="100%">
+<div align="center">
+<table align="center" width="100%" style="margin: 0 auto; width: 100%;">
 <tr>
-<td align="center" width="50%">
-<img src="assets/images/tiantan.png" width="95%" alt="超大规模建造">
-<br/><sub><b>大规模：</b>40 层蓝图，约 2 万方块。</sub>
-</td>
-<td align="center" width="50%">
-<img src="assets/images/img2build.png" width="95%" alt="多种图像到建筑">
-<br/><sub><b>多样化输入：</b>从不同 PNG 输入重建多样化建筑。</sub>
+<td align="center" width="100%">
+<img src="assets/images/tiantan.png" height="300" alt="超大规模建造">
+<br/><sub><b>大规模：</b>系统可处理大规模蓝图，包括 40 层、约 2 万方块的设计。</sub>
 </td>
 </tr>
 <tr>
-<td align="center" width="50%">
-<img src="assets/images/metrics_comparison.png" width="95%" alt="可扩展性">
-<br/><sub><b>扩展性：</b>工人数量增加，完成时间下降。</sub>
+<td align="center" width="100%">
+<img src="assets/images/img2build.png" height="300" alt="多种图像到建筑">
+<br/><sub><b>多样化输入：</b>从不同 PNG 输入重建多样化建筑。CraftUtopia 所有建筑建造成功率 100%。</sub>
 </td>
-<td align="center" width="50%">
-<img src="assets/images/compare.png" width="95%" alt="基线对比">
-<br/><sub><b>基线对比：</b>CraftUtopia 成功完成，而 MINDcraft 失败。</sub>
+</tr>
+<tr>
+<td align="center" width="100%">
+<img src="assets/images/metrics_comparison.png" height="300" alt="可扩展性">
+<br/><sub><b>扩展性：</b>工人数量增加，完成时间下降；6 人比 3 人快 1.5x，比 1 人快 3.9x。</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="100%">
+<img src="assets/images/compare.png" height="300" alt="基线对比">
+<br/><sub><b>基线对比：</b>与 MINDcraft 相比，CraftUtopia 可完成其失败的建造任务。</sub>
 </td>
 </tr>
 </table>
+</div>
 
-### 结果解读
-
-- **CraftUtopia 在 3 个代表性建筑上各进行 5 次试验，均可仅凭单张 2D 参考图像完成建造，成功率 100%。**
-- **与 MINDcraft 对比：其在天坛与国家大剧院任务上失败，金字塔任务成功率仅 13.33%。**
-- **可扩展性显著：在 NCPA 任务中，6 人比 3 人快 1.5x，比 1 人快 3.9x。**
-- **可处理大规模蓝图（40 层、约 2 万方块），并对多种建筑类型具有泛化能力。**
-- **技能蒸馏将 LLM 调用成本降至原来的四分之一，并提升长期执行稳定性。**
-- **在长时序建造中出现类人涌现行为，例如自主学习使用脚手架。**
-
----
+-----
 
 ## 项目介绍
 
@@ -158,53 +141,3 @@ CraftUtopia 采用两阶段流程：**设计**将单张 2D 参考图像转换为
 </td>
 </tr>
 </table>
-
----
-
-## 机制
-
-CraftUtopia 依赖两大机制：
-
-### 1) 分层协作（Manager -> Foreman -> Worker）
-- 管理者将蓝图拆分为**空间互不重叠**的区域，并分配为团队级目标。  
-- 工头在各自区域内制定计划并调度工人。  
-- 工人执行局部方块放置并回传进度，减少跨团队干扰。
-
-### 2) 技能获取与复用
-- 工头在执行过程中识别重复动作流程。  
-- 将流程上报给管理者，整理为共享技能库并分发给各团队。  
-- 工头直接调用已学技能，替代频繁的 LLM 重规划，提升规模化效率与稳定性。
-
----
-
-## 流程
-
-1. **设计（2D -> 3D 蓝图）**
-2. **建造（蓝图 -> 世界）**
-
-<details>
-<summary><b>设计细节</b></summary>
-
-- 建筑设计者从 2D 图像重建 3D 模型。  
-- 转换为 Minecraft 可执行的方块蓝图。  
-- 导出结构化任务文件。
-
-</details>
-
-<details>
-<summary><b>建造细节</b></summary>
-
-- 项目经理拆分蓝图为互不冲突子任务。  
-- 工头协调多工人并行建造。  
-- 工人完成方块放置并回传进度。
-
-</details>
-
----
-
-## 角色
-
-- **建筑设计者**：将 2D 输入转为可建造蓝图。
-- **项目经理**：拆分任务并避免冲突。
-- **工头**：规划与调度团队执行。
-- **工人**：在游戏世界中完成建造。
